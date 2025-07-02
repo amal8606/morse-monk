@@ -1,0 +1,40 @@
+<div *ngIf="!isPaymentDone" class="fade-up-init min-h-screen bg-[#f4f1ea] flex items-center justify-center p-6">
+  <div class="bg-white shadow-xl border border-yellow-900 rounded-2xl max-w-2xl w-full p-8 space-y-6">
+
+    <!-- Bank Details -->
+    <div>
+      <h2 class="text-xl font-heading text-[#3e3020] mb-2">Bank Transfer Details</h2>
+      <ul class="font-body text-gray-800">
+        <li><strong>Bank Name:</strong> State Bank of India</li>
+        <li><strong>Account Name:</strong> Morse Monk Solutions</li>
+        <li><strong>Account Number:</strong> 123456789012</li>
+        <li><strong>IFSC Code:</strong> SBIN0001234</li>
+        <li><strong>Branch:</strong> Kochi Main</li>
+      </ul>
+    </div>
+
+    <hr class="border-gray-300" />
+
+    <!-- Screenshot Upload -->
+    <div>
+      <h3 class="text-lg font-heading text-[#3e3020] mb-2">Upload Payment Screenshot</h3>
+      <input
+        type="file"
+        accept="image/*"
+        (change)="onFileSelected($event)"
+        class="block w-full border border-gray-400 rounded px-4 py-2 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:bg-[#5e4b2b] file:text-white hover:file:bg-[#997950]"
+      />
+      <p *ngIf="uploadedFileName" class="mt-2 text-green-700 font-body">Uploaded: {{ uploadedFileName }}</p>
+    </div>
+
+    <button
+      type="button"
+      class="w-full mt-4 bg-[#5e4b2b] text-white font-heading py-2 px-4 rounded hover:bg-[#997950] transition"
+      (click)="submitPaymentProof()"
+    >
+      Submit Screenshot
+    </button>
+
+  </div>
+</div>
+<app-payment-status *ngIf="isPaymentDone"></app-payment-status>

@@ -1,0 +1,107 @@
+<section *ngIf="!confirm" class="container flex flex-col items-center bg-[#f4f1ea] py-12 overflow-hidden fade-up-init">
+  <div class="w-full md:max-w-5xl">
+    <div id="registerForm" class="mt-10 bg-[#fffefb] p-8 rounded-lg shadow-xl border border-[#d6c9ae]">
+      <h2 class="text-2xl font-heading text-[#3e3020] mb-6 text-center">Book Demo Class</h2>
+
+      <form>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+          <!-- Name -->
+          <div>
+            <label for="firstName" class="block text-[#3e3020] font-semibold mb-1">Name</label>
+            <input
+              id="firstName"
+              name="firstName"
+              type="text"
+              required
+              class="w-full bg-[#fefcf5] border border-[#bca87c] text-[#3e3020] font-body rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#8b774f]"
+            />
+          </div>
+
+          <!-- Email -->
+          <div>
+            <label for="email" class="block text-[#3e3020] font-semibold mb-1">Email ID</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              class="w-full bg-[#fefcf5] border border-[#bca87c] text-[#3e3020] font-body rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#8b774f]"
+            />
+          </div>
+
+          <!-- Country Code + Phone Input -->
+          <div>
+            <label class="block text-[#3e3020] font-semibold mb-1">Phone Number (WhatsApp)</label>
+            <div class="flex items-stretch border border-[#bca87c] bg-[#fefcf5] rounded-lg overflow-hidden">
+              <select
+                class="px-3 bg-[#e8dcc2] text-[#3e3020] font-semibold border-r border-[#bca87c] focus:outline-none"
+              >
+                <option value="+91">+91</option>
+                <option value="+1">+1</option>
+                <option value="+44">+44</option>
+              </select>
+              <input
+                type="tel"
+                name="phone"
+                placeholder="Enter phone number"
+                required
+                class="flex-1 px-3 py-2 bg-transparent text-[#3e3020] focus:outline-none"
+              />
+            </div>
+          </div>
+
+          <!-- Demo Date -->
+          <div>
+            <label for="demoDate" class="block text-[#3e3020] font-semibold mb-1">Demo Class Date</label>
+            <input
+              id="demoDate"
+              name="demoDate"
+              type="date"
+              required
+              class="w-full bg-[#fefcf5] border border-[#bca87c] text-[#3e3020] font-body rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#8b774f]"
+            />
+          </div>
+
+        </div>
+
+        <!-- Submit Button -->
+        <button
+          (click)="confirm=true"
+          class="mt-8 w-full py-2 px-4 bg-[#5e4b2b] text-white font-heading text-lg rounded hover:bg-[#8b774f] transition"
+        >
+          Register
+        </button>
+      </form>
+
+      <p class="mt-5 text-center text-[#5e4b2b] italic font-body">* Login required to register</p>
+    </div>
+  </div>
+</section>
+<section class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" *ngIf="confirm">
+  <div class="fade-up-init min-h-screen flex items-center justify-center px-4 py-12 fade-up-init">
+  <div class="bg-white shadow-xl rounded-2xl p-8 max-w-md text-center border border-green-900">
+    
+    <!-- Success Animation -->
+    <img src="/success.gif" alt="Success animation" class="mx-auto w-24 h-24" />
+
+    <!-- Heading -->
+    <h2 class="text-2xl font-heading text-[#3e3020] mb-2">Demo Class Booked Successfully!</h2>
+
+    <!-- Message -->
+    <p class="text-lg text-gray-700 font-body">
+      Thank you for booking a demo session. Your request has been received and <span class="font-semibold text-green-700">confirmed</span>.
+    </p>
+
+    <p class="mt-4 text-gray-700 font-body">
+      Our team will connect with you shortly to share the session link and other details.
+    </p>
+
+    <!-- Button -->
+    <a routerLink="/" class="mt-6 inline-block bg-[#5e4b2b] text-white font-heading px-6 py-2 rounded-lg shadow hover:bg-[#997950] transition">
+      Go to Home
+    </a>
+  </div>
+</div>
+
+</section>
