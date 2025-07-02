@@ -31,14 +31,16 @@ export class AppComponent {
 ngAfterViewInit() {
   if (isPlatformBrowser(this.platformId)) {
     import('aos').then((AOS) => {
-      AOS.init({ duration: 1000, once: true });
+      AOS.default.init({
+        duration: 1000,
+        once: true,
+      });
 
-      // Refresh AOS on route changes after DOM is ready
       this.router.events.subscribe((event) => {
         if (event instanceof NavigationEnd) {
           setTimeout(() => {
-            AOS.refresh(); // Ensure newly rendered content gets animations
-          }, 100); // slight delay to allow DOM updates
+            AOS.default.refresh();
+          }, 100);
         }
       });
     });
