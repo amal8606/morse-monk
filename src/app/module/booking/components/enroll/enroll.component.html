@@ -1,11 +1,7 @@
-<section
-  class="container flex flex-col items-center bg-[#f4f1ea] py-12 font-body text-[#3e3020] fade-up-init"
->
+<section class="container flex flex-col items-center bg-[#f4f1ea] py-12 font-body text-[#3e3020] fade-up-init">
   <div class="w-full md:max-w-6xl">
     <div class="bg-white p-10 rounded-xl shadow-lg max-w-6xl mx-auto">
-      <h2 class="text-3xl font-heading text-[#3e3020] text-center mb-8">
-        Enrol For Class
-      </h2>
+      <h2 class="text-3xl font-heading text-[#3e3020] text-center mb-8">Enrol For Class</h2>
 
       <!-- Class Type Selection -->
       <div class="mb-6">
@@ -20,215 +16,99 @@
 
       <mat-horizontal-stepper linear #stepper>
         <!-- Step 1: Booking -->
-        <mat-step [stepControl]="bookingForm">
-          <form [formGroup]="bookingForm">
+        <mat-step [stepControl]="currentForm">
+          <form [formGroup]="currentForm">
             <ng-template matStepLabel>Booking</ng-template>
 
             <!-- Normal Class -->
-            <div
-              *ngIf="selectedClassType === 'normal'"
-              class="grid grid-cols-1 md:grid-cols-2 gap-6"
-            >
-              <!-- Name -->
+            <div *ngIf="selectedClassType === 'normal'" class="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label class="block mb-1 font-semibold">Name</label>
-                <input
-                  type="text"
-                  formControlName="firstName"
-                  class="w-full border border-[#c3b27a] rounded px-4 py-2 bg-[#fdfaf4]"
-                />
+                <input type="text" formControlName="firstName" class="w-full border border-[#c3b27a] rounded px-4 py-2 bg-[#fdfaf4]" />
               </div>
-
-              <!-- Email -->
               <div>
                 <label class="block mb-1 font-semibold">Email ID</label>
-                <input
-                  type="email"
-                  formControlName="email"
-                  class="w-full border border-[#c3b27a] rounded px-4 py-2 bg-[#fdfaf4]"
-                />
+                <input type="email" formControlName="email" class="w-full border border-[#c3b27a] rounded px-4 py-2 bg-[#fdfaf4]" />
               </div>
-
-              <!-- Phone -->
               <div class="md:col-span-2">
-                <label class="block mb-1 font-semibold"
-                  >Phone Number (WhatsApp)</label
-                >
-                <div
-                  class="flex items-stretch border border-[#c3b27a] rounded bg-[#fdfaf4] overflow-hidden"
-                >
-                  <select
-                    formControlName="countryCode"
-                    class="px-3 py-2 bg-[#e6dcc5] border-r border-[#c3b27a] focus:outline-none"
-                  >
-                    <option
-                      *ngFor="let country of countries"
-                      [value]="country.dialCode"
-                    >
-                      {{ country.dialCode }}
-                    </option>
+                <label class="block mb-1 font-semibold">Phone Number (WhatsApp)</label>
+                <div class="flex items-stretch border border-[#c3b27a] rounded bg-[#fdfaf4] overflow-hidden">
+                  <select formControlName="countryCode" class="px-3 py-2 bg-[#e6dcc5] border-r border-[#c3b27a] focus:outline-none">
+                    <option *ngFor="let country of countries" [value]="country.dialCode">{{ country.dialCode }}</option>
                   </select>
-                  <input
-                    type="tel"
-                    formControlName="phone"
-                    placeholder="Enter phone number"
-                    class="flex-1 px-4 py-2 bg-transparent focus:outline-none text-[#3e3020]"
-                  />
+                  <input type="tel" formControlName="phone" placeholder="Enter phone number" class="flex-1 px-4 py-2 bg-transparent focus:outline-none text-[#3e3020]" />
                 </div>
               </div>
-
-              <!-- Preferred Dates -->
               <div class="md:col-span-2">
-                <label class="block mb-1 font-semibold"
-                  >Select up to 5 Preferred Dates</label
-                >
+                <label class="block mb-1 font-semibold">Select up to 5 Preferred Dates</label>
                 <mat-form-field appearance="fill" class="w-full bg-white">
                   <mat-label>Choose a date</mat-label>
-                  <input
-                    matInput
-                    [matDatepicker]="picker"
-                    (dateInput)="addSelectedDate($event)"
-                    [formControl]="dateSelectionControl"
-                    readonly
-                  />
-                  <mat-datepicker-toggle
-                    matSuffix
-                    [for]="picker"
-                    [disabled]="selectedDates.length >= 5"
-                  ></mat-datepicker-toggle>
+                  <input matInput [matDatepicker]="picker" (dateInput)="addSelectedDate($event)" [formControl]="dateSelectionControl" readonly />
+                  <mat-datepicker-toggle matSuffix [for]="picker" [disabled]="selectedDates.length >= 5"></mat-datepicker-toggle>
                   <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
 
                 <div class="mt-2" *ngIf="selectedDates.length > 0">
                   <p class="text-sm font-semibold mb-1">Selected Dates:</p>
                   <mat-chip-listbox aria-label="Selected dates">
-                    <mat-chip
-                      *ngFor="let date of selectedDates; let i = index"
-                      (removed)="removeSelectedDate(i)"
-                    >
+                    <mat-chip *ngFor="let date of selectedDates; let i = index" (removed)="removeSelectedDate(i)">
                       {{ date | date : "shortDate" }}
-                      <button
-                        matChipRemove
-                        [attr.aria-label]="
-                          'remove ' + (date | date : 'shortDate')
-                        "
-                      >
+                      <button matChipRemove [attr.aria-label]="'remove ' + (date | date : 'shortDate')">
                         <mat-icon>cancel</mat-icon>
                       </button>
                     </mat-chip>
                   </mat-chip-listbox>
                 </div>
-                <mat-error *ngIf="showDateSelectionError()"
-                  >Please select between 1 and 5 dates.</mat-error
-                >
+                <mat-error *ngIf="showDateSelectionError()">Please select between 1 and 5 dates.</mat-error>
               </div>
             </div>
 
             <!-- MMD Signal Class -->
-            <div
-              *ngIf="selectedClassType === 'mmdSignal'"
-              class="grid grid-cols-1 md:grid-cols-2 gap-6"
-            >
-              <!-- Name -->
+            <div *ngIf="selectedClassType === 'mmdSignal'" class="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label class="block mb-1 font-semibold">Name</label>
-                <input
-                  type="text"
-                  formControlName="signalName"
-                  class="w-full border border-[#c3b27a] rounded px-4 py-2 bg-[#fdfaf4]"
-                />
+                <input type="text" formControlName="signalName" class="w-full border border-[#c3b27a] rounded px-4 py-2 bg-[#fdfaf4]" />
               </div>
-
-              <!-- Email -->
               <div>
                 <label class="block mb-1 font-semibold">Email ID</label>
-                <input
-                  type="email"
-                  formControlName="signalEmail"
-                  class="w-full border border-[#c3b27a] rounded px-4 py-2 bg-[#fdfaf4]"
-                />
+                <input type="email" formControlName="signalEmail" class="w-full border border-[#c3b27a] rounded px-4 py-2 bg-[#fdfaf4]" />
               </div>
-
-              <!-- Phone -->
               <div>
-                <label class="block mb-1 font-semibold"
-                  >Phone Number (WhatsApp)</label
-                >
-                <div
-                  class="flex items-stretch border border-[#c3b27a] rounded bg-[#fdfaf4] overflow-hidden"
-                >
-                  <select
-                    formControlName="signalCountryCode"
-                    class="px-3 py-2 bg-[#e6dcc5] border-r border-[#c3b27a] focus:outline-none"
-                  >
-                    <option
-                      *ngFor="let country of countries"
-                      [value]="country.dialCode"
-                    >
-                      {{ country.dialCode }}
-                    </option>
+                <label class="block mb-1 font-semibold">Phone Number (WhatsApp)</label>
+                <div class="flex items-stretch border border-[#c3b27a] rounded bg-[#fdfaf4] overflow-hidden">
+                  <select formControlName="signalCountryCode" class="px-3 py-2 bg-[#e6dcc5] border-r border-[#c3b27a] focus:outline-none">
+                    <option *ngFor="let country of countries" [value]="country.dialCode">{{ country.dialCode }}</option>
                   </select>
-                  <input
-                    type="tel"
-                    formControlName="signalPhone"
-                    placeholder="Enter phone number"
-                    class="flex-1 px-4 py-2 bg-transparent focus:outline-none text-[#3e3020]"
-                  />
+                  <input type="tel" formControlName="signalPhone" placeholder="Enter phone number" class="flex-1 px-4 py-2 bg-transparent focus:outline-none text-[#3e3020]" />
                 </div>
               </div>
-
-              <!-- MMD Centre -->
               <div>
                 <label class="block mb-1 font-semibold">MMD Centre</label>
                 <mat-form-field appearance="fill" class="w-full">
                   <mat-label>Select Centre</mat-label>
                   <mat-select formControlName="mmdCentre">
-                    <mat-option
-                      *ngFor="let centre of mmdCentres"
-                      [value]="centre"
-                    >
-                      {{ centre }}
-                    </mat-option>
+                    <mat-option *ngFor="let centre of mmdCentres" [value]="centre">{{ centre }}</mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
-
-              <!-- Exam Date -->
               <div>
                 <label class="block mb-1 font-semibold">MMD Exam Date</label>
                 <mat-form-field appearance="fill" class="w-full">
                   <mat-label>Choose Date</mat-label>
-                  <input
-                    matInput
-                    [matDatepicker]="mmdPicker"
-                    formControlName="mmdExamDate"
-                  />
-                  <mat-datepicker-toggle
-                    matSuffix
-                    [for]="mmdPicker"
-                  ></mat-datepicker-toggle>
+                  <input matInput [matDatepicker]="mmdPicker" formControlName="mmdExamDate" />
+                  <mat-datepicker-toggle matSuffix [for]="mmdPicker"></mat-datepicker-toggle>
                   <mat-datepicker #mmdPicker></mat-datepicker>
                 </mat-form-field>
               </div>
-
               <div class="md:col-span-2 text-sm italic text-gray-600 mt-2">
-                (10 Classes will be provided online prior to exam date. Dates
-                and time will be intimated through email/whatsapp)
+                (10 Classes will be provided online prior to exam date. Dates and time will be intimated through email/whatsapp)
               </div>
             </div>
 
-            <!-- Step Button -->
             <div class="flex justify-end mt-6">
-          <button
-  mat-raised-button
-  class="bg-[#c3b27a] hover:bg-[#b39f66] text-white font-heading px-6 py-2 rounded"
-  matStepperNext
-  type="button"      
- 
->
-  Next: Payment
-</button>
-
+              <button mat-raised-button class="bg-[#c3b27a] hover:bg-[#b39f66] text-white font-heading px-6 py-2 rounded" matStepperNext type="button" [disabled]="!isCurrentStepValid()">
+                Next: Payment
+              </button>
             </div>
           </form>
         </mat-step>
@@ -240,11 +120,7 @@
             <p class="mb-4 text-lg font-medium text-[#3e3020]">
               Proceed to payment to complete your enrolment.
             </p>
-            <button
-              mat-raised-button
-              class="bg-[#5e4b2b] hover:bg-[#997950] text-white font-heading px-6 py-2 rounded"
-              (click)="onSubmit()"
-            >
+            <button mat-raised-button class="bg-[#5e4b2b] hover:bg-[#997950] text-white font-heading px-6 py-2 rounded" (click)="onSubmit()">
               Complete Registration
             </button>
           </div>

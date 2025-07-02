@@ -34,7 +34,6 @@ import { PaymentStatusComponent } from '../../../../_shared/components/confirm-p
     PaymentStatusComponent
   ],
 })
-
 export class EnrollClassComponent {
   selectedDialCode: string = '+91';
   selectedSignalDialCode: string = '+91';
@@ -48,36 +47,41 @@ export class EnrollClassComponent {
     { name: 'United Kingdom', code: 'UK', dialCode: '+44' }
   ];
 
-  mmdCentres: string[] = [
-    'Mumbai',
-    'Chennai',
-    'Kolkata',
-    'Cochin',
-    'Delhi'
-  ];
+  mmdCentres: string[] = ['Mumbai', 'Chennai', 'Kolkata', 'Cochin', 'Delhi'];
 
-  public bookingForm: FormGroup = new FormGroup({
+  public normalForm: FormGroup = new FormGroup({
     firstName: new FormControl('', Validators.required),
     email: new FormControl('', [Validators.required, Validators.email]),
     phone: new FormControl('', Validators.required),
-    countryCode: new FormControl('+91'),
+    countryCode: new FormControl('+91')
+  });
 
+  public mmdSignalForm: FormGroup = new FormGroup({
     signalName: new FormControl('', Validators.required),
     signalEmail: new FormControl('', [Validators.required, Validators.email]),
     signalPhone: new FormControl('', Validators.required),
     signalCountryCode: new FormControl('+91'),
-    mmdCentre: new FormControl(''),
-    mmdExamDate: new FormControl('')
+    mmdCentre: new FormControl('', Validators.required),
+    mmdExamDate: new FormControl('', Validators.required)
   });
 
-  constructor(private readonly seoService: SeoService, private readonly route: Router) { }
+  constructor(
+    private readonly seoService: SeoService,
+    private readonly route: Router
+  ) {}
 
   ngOnInit(): void {
     this.seoService.updateMetaTags({
       title: 'Morse Monk - Enroll for class',
-      description: 'Morse Monk is a platform that helps you learn Morse Code in a fun and interactive way. Whether you are a beginner or an advanced learner, Morse Monk has got you covered.',
-      keywords: 'Morse, Online, Interactive, Classes, Lesson, MMD signal exam, Ham radio exam, Morse visual signal, Reception, Tool for sending morse message'
+      description:
+        'Morse Monk is a platform that helps you learn Morse Code in a fun and interactive way. Whether you are a beginner or an advanced learner, Morse Monk has got you covered.',
+      keywords:
+        'Morse, Online, Interactive, Classes, Lesson, MMD signal exam, Ham radio exam, Morse visual signal, Reception, Tool for sending morse message'
     });
+  }
+
+  get currentForm(): FormGroup {
+    return this.selectedClassType === 'normal' ? this.normalForm : this.mmdSignalForm;
   }
 
   public addSelectedDate(event: any) {
@@ -97,32 +101,25 @@ export class EnrollClassComponent {
   }
 
   public showDateSelectionError() {
-    return this.selectedClassType === 'normal' && (this.selectedDates.length === 0 || this.selectedDates.length > 5);
+    return (
+      this.selectedClassType === 'normal' &&
+      (this.selectedDates.length === 0 || this.selectedDates.length > 5)
+    );
   }
 
-  // public isCurrentStepValid(): boolean {
-  //   if (this.selectedClassType === 'normal') {
-  //     return (
-  //       !!this.bookingForm.get('firstName')?.valid &&
-  //       !!this.bookingForm.get('email')?.valid &&
-  //       !!this.bookingForm.get('phone')?.valid &&
-  //       this.selectedDates.length > 0 &&
-  //       this.selectedDates.length <= 5
-  //     );
-  //   } else {
-  //     return (
-  //       !!this.bookingForm.get('signalName')?.valid &&
-  //       !!this.bookingForm.get('signalEmail')?.valid &&
-  //       !!this.bookingForm.get('signalPhone')?.valid &&
-  //       !!this.bookingForm.get('mmdCentre')?.valid &&
-  //       !!this.bookingForm.get('mmdExamDate')?.valid
-  //     );
-  //   }
-  // }
+  public isCurrentStepValid(): boolean {
+    if (this.selectedClassType === 'normal') {
+      return (
+        this.normalForm.valid &&
+        this.selectedDates.length > 0 &&
+        this.selectedDates.length <= 5
+      );
+    } else {
+      return this.mmdSignalForm.valid;
+    }
+  }
 
   public onSubmit() {
-    // if (this.isCurrentStepValid()) {
-      this.route.navigate(['/payment']);
-    // }
+    this.route.navigate(['/payment']);
   }
 }
