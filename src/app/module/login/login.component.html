@@ -1,17 +1,34 @@
-<section class="flex h-screen">
-    <!-- Left side: Logo and Name -->
-    <div class="w-1/2 bg-purple-100 flex flex-col justify-center items-center">
-        <h1 class="text-3xl font-bold text-purple-700">Morse Monk</h1>
-        <p class="mt-2 text-purple-600">Welcome to Family</p>
-    </div>
-    <!-- Right side: Login Form -->
-    <div class="w-1/2 bg-white flex flex-col justify-center items-center">
-        <form class="w-2/3 max-w-md">
-            <p>Please enter your mobile number / email to </p>
-            <h2 class="text-2xl font-semibold mb-6 ">Login</h2>
-            <input type="text" placeholder="Enter Mobile No / Email" class="w-full mb-4 p-2 border rounded">
-            <input type="password" placeholder="Password" class="w-full mb-6 p-2 border rounded">
-            <button type="submit" class="w-full bg-purple-600 text-white py-2 rounded hover:bg-purple-700">Login</button>
-        </form>
-    </div>
+<section class="flex  flex-col md:flex-row h-screen font-body bg-[#f4f1ea] text-[#3e3020]">
+  <!-- Left side: Logo and Welcome -->
+  <div class="w-full md:w-1/2 flex flex-col justify-center items-center bg-[#e6dcc5] p-6">
+    <h1 class="text-4xl font-heading font-bold">Morse Monk</h1>
+    <p class="mt-2 text-lg italic">Welcome to the Family</p>
+  </div>
+
+  <!-- Right side: Login Form -->
+  <div class="w-full md:w-1/2 flex flex-col justify-center items-center bg-white p-6">
+    <form class="w-full max-w-md space-y-4 bg-[#fdfaf4] p-8 rounded-lg shadow-lg">
+      <p class="text-sm">Please enter your mobile number or email to</p>
+      <h2 class="text-2xl font-heading font-semibold">Login</h2>
+
+      <input
+        type="text"
+        placeholder="Enter Mobile No / Email"
+        class="w-full p-3 border border-[#c3b27a] bg-[#fffdf7] rounded focus:outline-none focus:ring-2 focus:ring-[#c3b27a]"
+      />
+
+      <input
+        type="password"
+        placeholder="Password"
+        class="w-full p-3 border border-[#c3b27a] bg-[#fffdf7] rounded focus:outline-none focus:ring-2 focus:ring-[#c3b27a]"
+      />
+
+      <button
+        type="submit"
+        class="w-full bg-[#5e4b2b] text-white py-2 rounded hover:bg-[#997950] transition"
+      >
+        Login
+      </button>
+    </form>
+  </div>
 </section>

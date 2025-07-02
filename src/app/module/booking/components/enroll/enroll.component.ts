@@ -66,8 +66,8 @@ export class EnrollClassComponent {
     signalEmail: new FormControl('', [Validators.required, Validators.email]),
     signalPhone: new FormControl('', Validators.required),
     signalCountryCode: new FormControl('+91'),
-    mmdCentre: new FormControl('', Validators.required),
-    mmdExamDate: new FormControl('', Validators.required)
+    mmdCentre: new FormControl(''),
+    mmdExamDate: new FormControl('')
   });
 
   constructor(private readonly seoService: SeoService, private readonly route: Router) { }
@@ -100,29 +100,29 @@ export class EnrollClassComponent {
     return this.selectedClassType === 'normal' && (this.selectedDates.length === 0 || this.selectedDates.length > 5);
   }
 
-  public isCurrentStepValid(): boolean {
-    if (this.selectedClassType === 'normal') {
-      return (
-        !!this.bookingForm.get('firstName')?.valid &&
-        !!this.bookingForm.get('email')?.valid &&
-        !!this.bookingForm.get('phone')?.valid &&
-        this.selectedDates.length > 0 &&
-        this.selectedDates.length <= 5
-      );
-    } else {
-      return (
-        !!this.bookingForm.get('signalName')?.valid &&
-        !!this.bookingForm.get('signalEmail')?.valid &&
-        !!this.bookingForm.get('signalPhone')?.valid &&
-        !!this.bookingForm.get('mmdCentre')?.valid &&
-        !!this.bookingForm.get('mmdExamDate')?.valid
-      );
-    }
-  }
+  // public isCurrentStepValid(): boolean {
+  //   if (this.selectedClassType === 'normal') {
+  //     return (
+  //       !!this.bookingForm.get('firstName')?.valid &&
+  //       !!this.bookingForm.get('email')?.valid &&
+  //       !!this.bookingForm.get('phone')?.valid &&
+  //       this.selectedDates.length > 0 &&
+  //       this.selectedDates.length <= 5
+  //     );
+  //   } else {
+  //     return (
+  //       !!this.bookingForm.get('signalName')?.valid &&
+  //       !!this.bookingForm.get('signalEmail')?.valid &&
+  //       !!this.bookingForm.get('signalPhone')?.valid &&
+  //       !!this.bookingForm.get('mmdCentre')?.valid &&
+  //       !!this.bookingForm.get('mmdExamDate')?.valid
+  //     );
+  //   }
+  // }
 
   public onSubmit() {
-    if (this.isCurrentStepValid()) {
+    // if (this.isCurrentStepValid()) {
       this.route.navigate(['/payment']);
-    }
+    // }
   }
 }
