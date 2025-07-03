@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { PaymentComponent } from './_shared/components/payments/payments.component';
 import { AnnouncementsComponent } from './module/announcements/announcements.component';
 import { LoginComponent } from './module/login/login.component';
+import { RegisterComponent } from './module/register/register.component';
 
 export const routes: Routes = [
   { path: '', 
@@ -16,6 +17,7 @@ export const routes: Routes = [
   // {path: 'contact', component: ContactComponent },
    {path: 'announcement', component: AnnouncementsComponent },
    {path: 'login', component: LoginComponent },
-   {path:'payment',component:PaymentComponent}
+   {path:'payment',component:PaymentComponent},
+   {path:'register',component:RegisterComponent}
 
 ];

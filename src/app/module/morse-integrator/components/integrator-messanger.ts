@@ -30,7 +30,7 @@ export class IntegratorMessangerComponent {
   //prevent page reload
   @HostListener('window:beforeunload', ['$event'])
 handleBeforeUnload(event: BeforeUnloadEvent) {
-  if (this.isRecording) {
+  if (this.isRecording || this.audioUrl!='') {
     event.preventDefault();
     event.returnValue = 'You are recording. Leaving now will delete the unsaved Morse code.';
   }
@@ -68,7 +68,17 @@ handleBeforeUnload(event: BeforeUnloadEvent) {
   openRecorderModal(user: any) {
     this.selectedUser = user;
   }
+public confirmCloseModal(){
+  const message = '⚠️ You are recording or have unsaved audio. Closing will delete your Morse code. Do you want to proceed?';
+  const shouldWarn = this.isRecording || 
+                  (this.audioUrl !== null && this.audioUrl !== undefined && this.audioUrl !== '');
 
+if (shouldWarn) {
+  if (confirm(message)) this.closeModal();
+} else {
+  this.closeModal();
+}
+}
   closeModal() {
      // Stop any ongoing tone
   if (this.toneActive) {

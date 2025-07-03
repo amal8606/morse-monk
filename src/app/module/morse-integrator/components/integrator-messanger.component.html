@@ -1,4 +1,4 @@
-<div class="p-6 max-w-3xl mx-auto fade-up-init">
+<div class="p-10 h-screen px-3 max-w-3xl mx-auto fade-up-init">
   <!-- Filter Dropdown -->
   <div class="flex justify-end mb-4">
     <select class="border border-gray-300 rounded px-4 py-2">
@@ -10,7 +10,7 @@
   <!-- User List -->
   <ul class="space-y-4">
     <li *ngFor="let user of filteredUsers()" (click)="openRecorderModal(user)"
-        class="flex items-center gap-4 p-4 border rounded-lg shadow hover:shadow-md cursor-pointer transition">
+        class="flex items-center gap-4 p-4 border rounded-lg shadow hover:shadow-md cursor-pointer transition bg-white">
       <img [src]="user.avatar" alt="{{ user.name }}" class="w-12 h-12 rounded-full object-cover" />
       <div>
         <div class="font-semibold text-lg">{{ user.name }}</div>
@@ -21,16 +21,14 @@
 </div>
 
 <!-- Modal -->
-<!-- Modal: Only visible when a user is selected -->
-<div *ngIf="selectedUser" class="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
-  <div class="bg-white rounded-xl p-6 w-full max-w-md shadow-lg relative">
-    
-    <!-- Close button -->
-    <button class="absolute top-2 right-2 text-gray-400 hover:text-black" (click)="closeModal()">✖️</button>
+<div *ngIf="selectedUser" class="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50 px-4 py-6 overflow-y-auto">
+  <div class="bg-white rounded-xl p-6 w-full max-w-md shadow-lg relative select-none" style="user-select: none; -webkit-user-select: none;">
 
-    <!-- Header: Avatar + Name + WhatsApp button -->
-    <div class="flex items-center justify-between mb-4">
-      <!-- Left: Avatar + Name -->
+    <!-- Close button -->
+    <button class="absolute top-2 right-2 text-gray-400 hover:text-black" (click)="confirmCloseModal()">✖️</button>
+
+    <!-- Header: Avatar + Name + WhatsApp -->
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-4">
       <div class="flex items-center gap-4">
         <img [src]="selectedUser.avatar" alt="{{ selectedUser.name }}" class="w-12 h-12 rounded-full object-cover" />
         <div>
@@ -39,7 +37,6 @@
         </div>
       </div>
 
-      <!-- Right: WhatsApp button -->
       <button
         class="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 shadow"
         title="Send via WhatsApp"
@@ -60,34 +57,30 @@
       </ul>
     </div>
 
-    <!-- Recorder Area -->
+    <!-- Recorder -->
     <div class="flex flex-col items-center bg-gray-100 p-4 rounded space-y-4">
-      
-      <!-- Buttons -->
-      <div class="flex justify-center gap-4">
+      <div class="flex flex-col sm:flex-row justify-center items-center gap-4 w-full">
         <button
           (mousedown)="startTone()" (mouseup)="stopTone()"
           (touchstart)="startTone()" (touchend)="stopTone()"
-          class="bg-ink text-white font-heading text-xl px-8 py-4 rounded-full shadow-lg active:scale-95 transition">
+          class="bg-ink text-white font-heading text-lg px-6 sm:px-8 py-4 rounded-full shadow-lg active:scale-95 transition select-none touch-manipulation"
+          style="user-select: none; -webkit-user-select: none;"
+        >
           🔊 Hold to Buzz
         </button>
 
         <button (click)="stopRecording()" [disabled]="!isRecording"
-          class="text-red-600 px-4 py-2 rounded hover:bg-red-100 disabled:opacity-50">
+          class="text-red-600 px-4 py-2 rounded hover:bg-red-100 disabled:opacity-50 w-full sm:w-auto">
           ⏹️ Stop
         </button>
       </div>
 
-      <!-- Audio Preview -->
       <audio *ngIf="audioUrl" [src]="audioUrl" controls class="w-full mt-2"></audio>
 
-      <!-- Download Button -->
       <button *ngIf="audioUrl" (click)="downloadAudio()"
-        class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+        class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 w-full sm:w-auto">
         ⬇️ Download
       </button>
     </div>
   </div>
 </div>
-
-
