@@ -60,7 +60,7 @@
         <li>Additional 10 days sending practice – <span class="text-green-700 font-semibold">Free</span></li>
       </ol>
       <div class="w-full flex justify-center items-center mt-3">
-<button class="py-2 px-6 inline-flex items-center gap-x-4 text-base font-semibold rounded-lg border border-[#3e3020] bg-[#3e3020] text-white hover:bg-[#2c2416]">
+<button (click)="navigateTo('/booking/enroll-class')" class="py-2 px-6 inline-flex items-center gap-x-4 text-base font-semibold rounded-lg border border-[#3e3020] bg-[#3e3020] text-white hover:bg-[#2c2416]">
        Enrol Now
         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
@@ -101,9 +101,9 @@
       <ul class="list-disc list-inside max-w-2xl mx-auto text-left mb-6">
         <li>Become a <strong>Morse Integrator</strong> member</li>
         <li>Subscribe for <strong>3 months / 6 months / 1 year</strong></li>
-        <li>Use the Morse Integrator platform to send code via WhatsApp, Messenger, etc.</li>
+        <li>Use the Morse Integrator platform to send code via email</li>
       </ul>
-      <button class="py-2 px-6 inline-flex items-center gap-x-2 text-base font-semibold rounded-lg border border-[#3e3020] bg-[#3e3020] text-white hover:bg-[#2c2416]">
+      <button (click)="navigateTo('/morse-integrator')" class="py-2 px-6 inline-flex items-center gap-x-2 text-base font-semibold rounded-lg border border-[#3e3020] bg-[#3e3020] text-white hover:bg-[#2c2416]">
         Become a Morse Integrator Member
         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
