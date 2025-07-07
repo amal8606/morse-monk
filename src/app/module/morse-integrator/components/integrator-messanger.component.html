@@ -1,86 +1,148 @@
-<div class="p-10 h-screen px-3 max-w-3xl mx-auto fade-up-init">
-  <!-- Filter Dropdown -->
-  <div class="flex justify-end mb-4">
-    <select class="border border-gray-300 rounded px-4 py-2">
-      <option value="">All Countries</option>
-      <option *ngFor="let country of countries" [value]="country">{{ country }}</option>
-    </select>
-  </div>
+<section
+  class="p-10 h-screen px-3 max-w-3xl mx-auto fade-up-init flex items-center justify-center"
+>
+  <div
+    class="p-6 w-full max-w-md relative select-none"
+    style="user-select: none; -webkit-user-select: none"
+  >
+    <!-- Recorder -->
+    <div class="flex flex-col items-center p-4 rounded space-y-4">
+      <div class="flex flex-col items-center justify-center">
+       <button
+  [disabled]="audioUrl !== ''"
+  (mousedown)="startTone()" (mouseup)="stopTone()"
+  (touchstart)="startTone()" (touchend)="stopTone()"
+  class="relative w-36 h-36 rounded-full shadow-xl active:scale-95 transition-all duration-150 ease-in-out
+         border-4 border-[#cbb88c] overflow-hidden bg-white bg-opacity-80 backdrop-blur-md
+         flex items-center justify-center font-heading text-lg text-white
+         disabled:opacity-50 disabled:pointer-events-none hover:ring-4 hover:ring-[#e2d6b5]"
+  style="
+    background-image: url('/morse_key.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  "
+>
+  <span class="absolute inset-0 bg-black bg-opacity-10 rounded-full pointer-events-none"></span>
+  <span class="relative z-10 text-3xl drop-shadow-lg">🔊</span>
+</button>
 
-  <!-- User List -->
-  <ul class="space-y-4">
-    <li *ngFor="let user of filteredUsers()" (click)="openRecorderModal(user)"
-        class="flex items-center gap-4 p-4 border rounded-lg shadow hover:shadow-md cursor-pointer transition bg-white">
-      <img [src]="user.avatar" alt="{{ user.name }}" class="w-12 h-12 rounded-full object-cover" />
-      <div>
-        <div class="font-semibold text-lg">{{ user.name }}</div>
-        <div class="text-sm text-gray-500">{{ user.country }}</div>
-      </div>
-    </li>
-  </ul>
-</div>
-
-<!-- Modal -->
-<div *ngIf="selectedUser" class="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50 px-4 py-6 overflow-y-auto">
-  <div class="bg-white rounded-xl p-6 w-full max-w-md shadow-lg relative select-none" style="user-select: none; -webkit-user-select: none;">
-
-    <!-- Close button -->
-    <button class="absolute top-2 right-2 text-gray-400 hover:text-black" (click)="confirmCloseModal()">✖️</button>
-
-    <!-- Header: Avatar + Name + WhatsApp -->
-    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-4">
-      <div class="flex items-center gap-4">
-        <img [src]="selectedUser.avatar" alt="{{ selectedUser.name }}" class="w-12 h-12 rounded-full object-cover" />
-        <div>
-          <div class="text-lg font-bold">{{ selectedUser.name }}</div>
-          <div class="text-sm text-gray-500">{{ selectedUser.country }}</div>
+        <div
+          *ngIf="!isRecording && !audioUrl"
+          class="text-center mt-4 text-lg font-body fade-up-init"
+        >
+          <p class="mb-2">Create your Morse message</p>
+          <p class="text-sm text-gray-600">
+            Click the button to start recording
+          </p>
         </div>
+        <ul
+          *ngIf="isRecording || audioUrl"
+          class="list-disc font-body pl-5 mt-2 space-y-1 fade-up-init"
+        >
+          <li>
+            Press and hold the <strong>🔊 Buzz</strong> button (or Ctrl key) to
+            create Morse tones.
+          </li>
+          <li>Click ⏹️ Stop to finish recording.</li>
+          <li>Download the audio, then send it via WhatsApp.</li>
+        </ul>
+
+        <button
+          *ngIf="isRecording"
+          (click)="stopRecording()"
+          [disabled]="!isRecording"
+          class="text-red-600 px-4 py-2 rounded hover:bg-red-100 disabled:opacity-50 w-full sm:w-auto"
+        >
+          ⏹️ Stop
+        </button>
       </div>
 
-      <button
-        class="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 shadow"
-        title="Send via WhatsApp"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-5 h-5" viewBox="0 0 24 24">
-          <path d="M12 .5a11.5 11.5 0 0 0-10.1 17.3L.5 23.5l5.9-1.6A11.5 11.5 0 1 0 12 .5Zm0 21A9.5 9.5 0 1 1 21.5 12 9.51 9.51 0 0 1 12 21.5ZM16.3 14.8c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.2s-.8 1-.9 1.1-.3.2-.6.1a8.26 8.26 0 0 1-2.3-1.4A8.47 8.47 0 0 1 8 11.1c-.1-.2 0-.4.1-.5s.2-.3.3-.5a.42.42 0 0 0 0-.5c-.1-.2-.7-1.6-1-2.2s-.5-.5-.7-.5h-.6a1.12 1.12 0 0 0-.8.4A3.18 3.18 0 0 0 4.6 9a6.8 6.8 0 0 0 2.9 5.2 8.23 8.23 0 0 0 4.8 1.7h.2c.4 0 1.1-.3 1.3-.6s.6-.9.6-1.2-.3-.5-.6-.6Z" />
-        </svg>
-      </button>
-    </div>
+      <audio
+        *ngIf="audioUrl"
+        [src]="audioUrl"
+        controls
+        class="w-full mt-2"
+      ></audio>
 
+      <div *ngIf="audioUrl" class="flex flex-wrap gap-2 w-full">
+        <button
+          (click)="showModal = !showModal"
+          class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 flex-1 min-w-[120px]"
+        >
+          ⬇️ Download
+        </button>
+
+        <button
+          class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 flex-1 min-w-[120px]"
+        >
+          ✉️ Email
+        </button>
+
+        <button
+          (click)="newMessage()"
+          class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 flex-1 min-w-[120px]"
+        >
+          🆕 New Message
+        </button>
+      </div>
+    </div>
     <!-- Instructions -->
-    <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-3 rounded mb-4 text-sm">
+    <!-- <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-3 rounded mb-4 text-sm">
       <p>🎯 <strong>Instructions:</strong></p>
       <ul class="list-disc pl-5 mt-2 space-y-1">
         <li>Press and hold the <strong>🔊 Buzz</strong> button (or Ctrl key) to create Morse tones.</li>
         <li>Click ⏹️ Stop to finish recording.</li>
         <li>Download the audio, then send it via WhatsApp.</li>
       </ul>
-    </div>
+    </div> -->
+  </div>
+</section>
+<!-- /modal for custom file name -->
+<section
+  *ngIf="showModal"
+  class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+>
+  <div
+    class="bg-[#f4f1ea] shadow-2xl rounded-2xl p-6 sm:p-8 max-w-lg w-[80%] text-center border border-[#e2d6b5] relative font-body text-ink"
+  >
+    <!-- Close Button -->
+    <button
+      type="button"
+      (click)="showModal = !showModal"
+      class="absolute top-3 right-3 text-ink hover:text-red-700 text-lg"
+      aria-label="Close"
+    >
+      ✖
+    </button>
 
-    <!-- Recorder -->
-    <div class="flex flex-col items-center bg-gray-100 p-4 rounded space-y-4">
-      <div class="flex flex-col sm:flex-row justify-center items-center gap-4 w-full">
-        <button
-          (mousedown)="startTone()" (mouseup)="stopTone()"
-          (touchstart)="startTone()" (touchend)="stopTone()"
-          class="bg-ink text-white font-heading text-lg px-6 sm:px-8 py-4 rounded-full shadow-lg active:scale-95 transition select-none touch-manipulation"
-          style="user-select: none; -webkit-user-select: none;"
+    <h2 class="text-xl font-heading mb-4">Name Your Morse Message</h2>
+
+    <form [formGroup]="fileNameForm" class="space-y-4">
+      <!-- Label and Input -->
+      <div class="text-left">
+        <label for="fileName" class="block text-sm font-medium text-ink mb-1"
+          >Filename</label
         >
-          🔊 Hold to Buzz
-        </button>
-
-        <button (click)="stopRecording()" [disabled]="!isRecording"
-          class="text-red-600 px-4 py-2 rounded hover:bg-red-100 disabled:opacity-50 w-full sm:w-auto">
-          ⏹️ Stop
-        </button>
+        <input
+          formControlName="fileName"
+          id="fileName"
+          type="text"
+          placeholder="Enter filename"
+          class="w-full px-4 py-2 border border-[#cbb88c] rounded-md bg-white text-ink shadow-inner focus:outline-none focus:ring-2 focus:ring-[#5e4b2b]"
+        />
       </div>
 
-      <audio *ngIf="audioUrl" [src]="audioUrl" controls class="w-full mt-2"></audio>
-
-      <button *ngIf="audioUrl" (click)="downloadAudio()"
-        class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 w-full sm:w-auto">
-        ⬇️ Download
-      </button>
-    </div>
+      <!-- Save Button -->
+      <div class="pt-2">
+        <button
+          type="submit"
+          (click)="downloadAudio(); showModal = !showModal"
+          class="w-full bg-[#5e4b2b] text-white py-2 rounded-md font-heading hover:bg-[#7a6236] transition"
+        >
+          💾 Save
+        </button>
+      </div>
+    </form>
   </div>
-</div>
+</section>

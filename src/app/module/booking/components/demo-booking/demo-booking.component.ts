@@ -23,4 +23,9 @@ export class DemoBookingComponent{
       description: 'Morse Monk is a platform that helps you learn Morse Code in a fun and interactive way. Whether you are a beginner or an advanced learner, Morse Monk has got you covered.',
       keywords: 'Morse, Online, Interactive, Classes, Lesson, MMD signal exam, Ham radio exam, Morse visual signal, Reception, Tool for sending morse message'})
   }
+  onRegister(event: Event) {
+  event.preventDefault(); // prevent full page reload
+  this.confirm = true;
+}
+
 }

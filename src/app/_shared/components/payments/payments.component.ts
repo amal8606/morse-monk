@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { PaymentStatusComponent } from '../confirm-payment/confirm.compoent';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-payment',
@@ -12,7 +13,16 @@ export class PaymentComponent {
   screenshotFile: File | null = null;
   uploadedFileName: string = '';
   isPaymentDone:boolean=false;
-
+public paymentAmount: number = 0; 
+constructor(private readonly route:ActivatedRoute){}
+  ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      const amount = params['amount'];
+      if (amount) {
+        this.paymentAmount = +amount; // Convert to number
+      }
+    });
+  }
   onFileSelected(event: any): void {
     const file: File = event.target.files[0];
     if (file) {

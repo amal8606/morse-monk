@@ -1,12 +1,25 @@
 <!-- Navigation Bar -->
 <section
-  class="fixed top-0 left-0 w-full bg-white z-50 shadow-md py-4 md:py-6 lg:py-8"
+  class="fixed top-0 left-0 w-full bg-[#f4f1ea] z-50 shadow-md py-2 md:py-3 lg:py-4"
 >
   <div class="w-[90%] mx-auto flex items-center justify-between">
     <!-- Logo -->
-    <div (click)="navigateTo('/')" class="flex items-center h-full">
-      <img src="/logo.png" alt="logo" class="max-h-16 w-auto" />
-    </div>
+    <!-- Logo -->
+<!-- Logo -->
+<!-- Logo -->
+<div
+  (click)="navigateTo('/')"
+  class="flex items-center h-16 md:h-20 lg:h-24 overflow-hidden"
+>
+  <img
+    src="/logo.png"
+    alt="logo"
+    class="h-full w-auto max-w-[100px] md:max-w-[120px] lg:max-w-[160px] object-contain"
+  />
+</div>
+
+
+
 
     <!-- Desktop Nav Links -->
     <div class="hidden md:flex gap-6 items-center text-lg font-medium text-ink">

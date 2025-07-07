@@ -1,5 +1,8 @@
 import { CommonModule } from "@angular/common";
-import { Component, HostListener } from "@angular/core";
+import { ChangeDetectorRef, Component, HostListener } from "@angular/core";
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { NavigationStart, Route, Router } from "@angular/router";
+import { Subscription } from "rxjs";
 interface ToneSegment {
   start: number;
   duration: number;
@@ -8,7 +11,7 @@ interface ToneSegment {
 @Component({
     selector: 'app-integrator-messanger',
     standalone:true,
-    imports:[CommonModule],
+    imports:[CommonModule,ReactiveFormsModule,FormsModule],
     templateUrl: './integrator-messanger.component.html',
 })
 
@@ -22,11 +25,26 @@ export class IntegratorMessangerComponent {
   recordingStart = 0;
   toneStartTime = 0;
    selectedUser: any = null;
-
+showModal:boolean=false;
   audioUrl = '';
   isRecording = false;
   mediaRecorder: any;
   audioChunks: Blob[] = [];
+  private navSub!:Subscription;
+  constructor(private route:Router,private cdr:ChangeDetectorRef){
+    this.navSub =this.route.events.subscribe(event=>{
+      if(event instanceof NavigationStart){
+        if(this.isRecording || this.audioUrl!=''){
+          const message = '⚠️ You are recording or have unsaved audio. Leaving will delete your Morse code. Do you want to proceed?';
+          if (confirm(message)) {
+            this.closeModal();
+          } else {
+            this.route.navigate([location.pathname]);
+          }
+        }
+      }
+    })
+  }
   //prevent page reload
   @HostListener('window:beforeunload', ['$event'])
 handleBeforeUnload(event: BeforeUnloadEvent) {
@@ -36,15 +54,16 @@ handleBeforeUnload(event: BeforeUnloadEvent) {
   }
 }
   @HostListener('window:keydown', ['$event'])
-  handleKeyDown(event: KeyboardEvent) {
-    if (event.key === 'Control' && !this.toneActive && this.selectedUser) {
-      this.startTone();
-    }
+handleKeyDown(event: KeyboardEvent) {
+  if (event.key === 'Control' && !this.toneActive && this.audioUrl === '') {
+    this.startTone();
   }
+}
+
 
   @HostListener('window:keyup', ['$event'])
   handleKeyUp(event: KeyboardEvent) {
-    if (event.key === 'Control' && this.toneActive&&this.selectedUser) {
+    if (event.key === 'Control' && this.toneActive) {
       this.stopTone();
     }
   }
@@ -58,7 +77,10 @@ handleBeforeUnload(event: BeforeUnloadEvent) {
   countries = ['India', 'USA', 'China', 'UAE', 'Mexico'];
   selectedCountry = '';
  
-
+// filename form
+public fileNameForm:FormGroup=new FormGroup({
+  fileName:new FormControl('morse_message')
+})
   filteredUsers() {
     return this.selectedCountry
       ? this.users.filter(u => u.country === this.selectedCountry)
@@ -124,6 +146,7 @@ if (shouldWarn) {
   this.mediaRecorder.onstop = () => {
     const blob = new Blob(this.audioChunks, { type: 'audio/webm' });
     this.audioUrl = URL.createObjectURL(blob);
+    this.cdr.detectChanges();
         };
       });
     }
@@ -277,8 +300,19 @@ if (shouldWarn) {
     if (this.audioUrl) {
       const a = document.createElement('a');
       a.href = this.audioUrl;
-      a.download = 'morse-buzz.wav';
+      const fileName =this.fileNameForm.get('fileName')?.value;
+      a.download = `${fileName}.wav`;
       a.click();
     }
-  } }
+  }
+  public newMessage(){
+    const message =confirm('Download your previous message? Leaving will delete your Morse code. Do you want to proceed? ');
+    if(message){
+      this.closeModal();
+    }
+  }
+ngOnDestroy(){
+  if(this.navSub) this.navSub.unsubscribe();
+}
+}
   

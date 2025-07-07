@@ -50,25 +50,16 @@
               />
             </div>
           </div>
+        </div>
 
-          <!-- Demo Date -->
-          <div>
-            <label for="demoDate" class="block text-[#3e3020] font-semibold mb-1">Demo Class Date</label>
-            <input
-              id="demoDate"
-              name="demoDate"
-              type="date"
-              required
-              class="w-full bg-[#fefcf5] border border-[#bca87c] text-[#3e3020] font-body rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#8b774f]"
-            />
-          </div>
-
+        <div class="md:col-span-2 text-sm italic text-gray-600 mt-4">
+        <p>* available dates will be informed by mail</p>
         </div>
 
         <!-- Submit Button -->
         <button
-          (click)="confirm=true"
-          class="mt-8 w-full py-2 px-4 bg-[#5e4b2b] text-white font-heading text-lg rounded hover:bg-[#8b774f] transition"
+          (click)="onRegister($event)"
+          class="mt-5 w-full py-2 px-4 bg-[#5e4b2b] text-white font-heading text-lg rounded hover:bg-[#8b774f] transition"
         >
           Register
         </button>

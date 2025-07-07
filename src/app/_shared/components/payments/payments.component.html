@@ -1,10 +1,31 @@
-<div *ngIf="!isPaymentDone" class="fade-up-init min-h-screen bg-[#f4f1ea] flex items-center justify-center p-6">
-  <div class="bg-white shadow-xl border border-yellow-900 rounded-2xl max-w-2xl w-full p-8 space-y-6">
+<div
+  *ngIf="!isPaymentDone"
+  class="fade-up-init min-h-screen bg-[#f4f1ea] flex items-center justify-center px-3 sm:px-6 py-10"
+>
+  <div
+    class="bg-white shadow-xl border border-yellow-900 rounded-2xl w-full max-w-2xl p-4 sm:p-8 space-y-6"
+  >
+    <!-- Class Fee Info -->
+    <div
+      class="bg-yellow-50 border-l-4 border-yellow-700 p-4 sm:p-6 rounded text-left"
+    >
+      <p class="text-base sm:text-lg font-heading">
+        Amount:
+        <span class="text-lg sm:text-xl font-bold text-yellow-900">
+          ₹{{ paymentAmount }}
+        </span>
+      </p>
+      <p class="text-sm text-gray-700 mt-1">
+        Please make the payment via Bank or GPay and upload the screenshot.
+      </p>
+    </div>
 
     <!-- Bank Details -->
     <div>
-      <h2 class="text-xl font-heading text-[#3e3020] mb-2">Bank Transfer Details</h2>
-      <ul class="font-body text-gray-800">
+      <h2 class="text-lg sm:text-xl font-heading text-[#3e3020] mb-2">
+        Bank Transfer Details
+      </h2>
+      <ul class="font-body text-sm sm:text-base text-gray-800 leading-relaxed">
         <li><strong>Bank Name:</strong> State Bank of India</li>
         <li><strong>Account Name:</strong> Morse Monk Solutions</li>
         <li><strong>Account Number:</strong> 123456789012</li>
@@ -13,28 +34,53 @@
       </ul>
     </div>
 
-    <hr class="border-gray-300" />
+    <!-- GPay Option -->
+    <div
+      class="bg-yellow-100 border border-yellow-700 rounded-lg p-4 text-left text-sm sm:text-base"
+    >
+      <h3 class="text-base sm:text-lg font-heading text-yellow-900 mb-1">
+        GPay (Preferred)
+      </h3>
+      <p class="text-sm text-gray-800">Send payment to:</p>
+      <div
+        class="bg-white mt-2 p-3 rounded-lg text-center border border-yellow-800"
+      >
+        <span class="text-lg font-bold text-[#3e3020] select-all block"
+          >+91 9497445288</span
+        >
+        <p class="text-xs text-gray-600 mt-1">(Tap and hold to copy)</p>
+      </div>
+    </div>
 
     <!-- Screenshot Upload -->
     <div>
-      <h3 class="text-lg font-heading text-[#3e3020] mb-2">Upload Payment Screenshot</h3>
+      <h3 class="text-base sm:text-lg font-heading text-[#3e3020] mb-2">
+        Upload Payment Screenshot
+      </h3>
       <input
         type="file"
         accept="image/*"
         (change)="onFileSelected($event)"
-        class="block w-full border border-gray-400 rounded px-4 py-2 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:bg-[#5e4b2b] file:text-white hover:file:bg-[#997950]"
+        class="block w-full border border-gray-400 rounded px-4 py-2 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:bg-[#5e4b2b] file:text-white hover:file:bg-[#997950] transition"
       />
-      <p *ngIf="uploadedFileName" class="mt-2 text-green-700 font-body">Uploaded: {{ uploadedFileName }}</p>
+      <p *ngIf="uploadedFileName" class="mt-2 text-green-700 font-body text-sm">
+        Uploaded: {{ uploadedFileName }}
+      </p>
     </div>
 
+    <!-- Submit Button -->
     <button
       type="button"
-      class="w-full mt-4 bg-[#5e4b2b] text-white font-heading py-2 px-4 rounded hover:bg-[#997950] transition"
+      class="w-full sm:w-auto bg-[#5e4b2b] text-white font-heading py-2 px-6 rounded hover:bg-[#997950] transition"
       (click)="submitPaymentProof()"
     >
-      Submit Screenshot
+      Submit
     </button>
-
   </div>
 </div>
-<app-payment-status *ngIf="isPaymentDone"></app-payment-status>
+
+<!-- Shown once payment is marked done -->
+<app-payment-status
+  [paymentMethod]="'intergrator'"
+  *ngIf="isPaymentDone"
+></app-payment-status>

@@ -11,4 +11,7 @@ import { MorseIntegratorRoutingModule } from './morse-integrator-routing.module'
     MorseIntegratorRoutingModule
   ]
 })
-export class MorseIntegratorModule { }
+export class MorseIntegratorModule { 
+
+  
+}

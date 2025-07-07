@@ -1,26 +1,46 @@
-<section class="w-full bg-parchment py-12 px-4 md:px-10 text-ink font-body fade-up-init">
+<section
+  class="w-full bg-parchment py-12 px-4 md:px-10 text-ink font-body fade-up-init"
+>
   <div class="max-w-7xl mx-auto">
     <!-- Header -->
     <div class="text-center mb-12">
-      <h1 class="text-4xl md:text-5xl font-heading text-ink mb-4">Subscribe to Morse Integrator</h1>
+      <h1 class="text-4xl md:text-5xl font-heading text-ink mb-4">
+        Subscribe to Morse Integrator
+      </h1>
       <p class="text-lg text-[#4f4636] w-full mx-auto">
-        Unlock the ability to communicate using Morse code over the internet. Join a vibrant global community with exclusive features and benefits.
+        Unlock the ability to communicate using Morse code over the internet.
+        Join a vibrant global community with exclusive features and benefits.
       </p>
     </div>
 
     <!-- Benefits Section -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-      <div class="bg-white rounded-xl shadow-md p-6 border border-[#d4c79a] text-center">
+      <div
+        class="bg-white rounded-xl shadow-md p-6 border border-[#d4c79a] text-center"
+      >
         <h3 class="text-xl font-semibold text-ink mb-2">Global Connectivity</h3>
-        <p>Talk to fellow Morse enthusiasts from around the world with no special hardware.</p>
+        <p>
+          Talk to fellow Morse enthusiasts from around the world with no special
+          hardware.
+        </p>
       </div>
-      <div class="bg-white rounded-xl shadow-md p-6 border border-[#d4c79a] text-center">
+      <div
+        class="bg-white rounded-xl shadow-md p-6 border border-[#d4c79a] text-center"
+      >
         <h3 class="text-xl font-semibold text-ink mb-2">Flexible Plans</h3>
-        <p>Choose from 3 months, 6 months, or 1 year subscriptions based on your preference.</p>
+        <p>
+          Choose from 3 months, 6 months, or 1 year subscriptions based on your
+          preference.
+        </p>
       </div>
-      <div class="bg-white rounded-xl shadow-md p-6 border border-[#d4c79a] text-center">
+      <div
+        class="bg-white rounded-xl shadow-md p-6 border border-[#d4c79a] text-center"
+      >
         <h3 class="text-xl font-semibold text-ink mb-2">Digital Access</h3>
-        <p>Use the Morse Integrator directly from your web browser — no installation required.</p>
+        <p>
+          Use the Morse Integrator directly from your web browser — no
+          installation required.
+        </p>
       </div>
     </div>
 
@@ -32,7 +52,11 @@
     <!-- Plan Cards -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
       <div
-        class="bg-[#fdfaf3] rounded-xl shadow-lg p-6 text-center border-2 border-[#d4c79a] hover:border-[#3e3020] transition cursor-pointer"
+        [ngClass]="{
+          'border-4 border-[#3e3020]': selectedPlan == 3
+        }"
+        (click)="choosePlan(299);selectedPlan=3"
+        class="bg-[#fdfaf3] rounded-xl shadow-lg p-6 text-center hover:border-[#3e3020] transition cursor-pointer"
         tabindex="0"
         role="button"
         aria-label="Choose 3 month plan"
@@ -40,11 +64,14 @@
         <h3 class="text-xl font-bold text-ink mb-2">3 Months</h3>
         <p class="text-[#4f4636] mb-4">Short-term trial with full access.</p>
         <p class="text-3xl font-bold text-ink mb-6">₹299</p>
-        <button class="px-6 py-2 bg-ink text-white rounded-full hover:bg-[#5e4b2b] transition">Choose Plan</button>
       </div>
 
       <div
-        class="bg-[#fdfaf3] rounded-xl shadow-lg p-6 text-center border-4 border-[#5e4b2b] hover:border-[#3e3020] transition cursor-pointer"
+        [ngClass]="{
+          'border-4 border-[#3e3020]': selectedPlan == 6
+        }"
+        (click)="choosePlan(499);selectedPlan=6"
+        class="bg-[#fdfaf3] rounded-xl shadow-lg p-6 text-center hover:border-[#3e3020] transition cursor-pointer"
         tabindex="0"
         role="button"
         aria-label="Choose 6 month plan"
@@ -52,11 +79,14 @@
         <h3 class="text-xl font-bold text-ink mb-2">6 Months</h3>
         <p class="text-[#4f4636] mb-4">Most Popular. Save more!</p>
         <p class="text-3xl font-bold text-ink mb-6">₹499</p>
-        <button class="px-6 py-2 bg-ink text-white rounded-full hover:bg-[#5e4b2b] transition">Choose Plan</button>
       </div>
 
       <div
-        class="bg-[#fdfaf3] rounded-xl shadow-lg p-6 text-center border-2 border-[#d4c79a] hover:border-[#3e3020] transition cursor-pointer"
+        [ngClass]="{
+          'border-4 border-[#3e3020]': selectedPlan == 12
+        }"
+        (click)="choosePlan(799);selectedPlan=12"
+        class="bg-[#fdfaf3] rounded-xl shadow-lg p-6 text-center hover:border-[#3e3020] transition cursor-pointer"
         tabindex="0"
         role="button"
         aria-label="Choose 1 year plan"
@@ -64,18 +94,32 @@
         <h3 class="text-xl font-bold text-ink mb-2">1 Year</h3>
         <p class="text-[#4f4636] mb-4">Best value for long-term users.</p>
         <p class="text-3xl font-bold text-ink mb-6">₹799</p>
-        <button class="px-6 py-2 bg-ink text-white rounded-full hover:bg-[#5e4b2b] transition">Choose Plan</button>
       </div>
     </div>
 
     <!-- Call to Action -->
     <div class="text-center">
-      <p class="text-lg mb-4">Still wondering? Start now and be a part of history in the making.</p>
-      <button class="inline-flex items-center px-6 py-3 bg-[#c3b27a] text-[#3e3020] font-semibold rounded-full hover:bg-[#b39f66] transition">
-        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+      <p class="text-lg mb-4">
+        Still wondering? Start now and be a part of history in the making.
+      </p>
+      <button
+        (click)="navigateTo()"
+        class="inline-flex items-center px-6 py-3 bg-[#c3b27a] text-[#3e3020] font-semibold rounded-full hover:bg-[#b39f66] transition"
+      >
+        <svg
+          class="w-5 h-5 mr-2"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M17 8l4 4m0 0l-4 4m4-4H3"
+          />
         </svg>
-        Join Now
+        Make Payment
       </button>
     </div>
   </div>
